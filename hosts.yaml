@@ -1,0 +1,18 @@
+---
+# My Raspberry Pi and other Debian hosts
+
+all:
+    children:
+        minisystem:
+            hosts:
+                minisys.example.com:
+                arendthomas.northeurope.cloudapp.azure.com:
+            vars:
+                ansible_user: thomas
+        webserver:
+            hosts:
+                minisys.example.com:
+                arendthomas.northeurope.cloudapp.azure.com:
+            vars:
+                ansible_user: thomas
+...

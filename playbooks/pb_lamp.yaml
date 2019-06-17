@@ -1,0 +1,15 @@
+---
+# Install a web Server based on Debian Linux with
+#   + Apache2
+#   + MySQL
+#   + PHP
+#
+
+- name: LAMP server
+  hosts: webserver
+  become: yes
+  tasks:
+    - include_role:
+        name: webserver
+...
+

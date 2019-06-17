@@ -1,0 +1,13 @@
+---
+# Start with a minimal Debian with root and one user
+# Make the minimal system Asible compatible
+
+- name: Install minimal system requirements for ansible
+  hosts: all
+  gather_facts: false
+  become: yes
+  become_method: su
+  tasks:
+    - include_role:
+        name: minimalsystem
+...

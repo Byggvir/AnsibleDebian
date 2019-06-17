@@ -1,0 +1,34 @@
+---
+# Install a web server based on Linux with Apache, MySQL and PHP server 
+
+- name: Adding php key
+  apt_key:
+    id: B188E2B695BD4743
+    url: https://packages.sury.org/php/apt.gpg
+    state: present
+
+- name: Add php repo
+  apt_repository: 
+    repo: 'deb https://packages.sury.org/php/ stretch main' 
+    state: present
+
+- name: apt install apache2 and php7
+  become: yes
+  apt:
+    name: 
+        - apache2
+        - apache2-utils
+        - libapache2-mod-php7.3
+        - libapache2-mod-proxy-uwsgi
+        - mariadb-common
+        - mariadb-client
+        - mariadb-server
+        - php7.3
+        - php7.3-mysql
+        - php-xml
+        - php-mbstring
+        - php-intl
+        - php-cli
+        - imagemagick
+    update_cache: yes
+

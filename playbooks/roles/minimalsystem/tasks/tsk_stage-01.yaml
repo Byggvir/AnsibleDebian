@@ -1,0 +1,55 @@
+---
+
+- name: Mount DVD
+  become: true
+  become_method: su
+  ignore_errors: true
+  raw: '[ -n "$(findmnt /dev/sr0)" ] || mount -r /dev/sr0'
+  when: installedFrom == 'dvd'
+
+- name: Make this server ansible compatible
+  become: yes
+  become_method: su
+  raw: "apt-get install aptitude lsb-release apt-transport-https ca-certificates python dirmngr sudo -y"
+
+- name: Add user to group sudo
+  become: yes
+  become_method: su
+  raw: "adduser {{ ansible_user }} sudo"
+
+- name: Password less sudo step 1
+  become: yes
+  become_method: su
+  lineinfile:
+    path: /etc/sudoers
+    state: absent
+    regexp: '^%sudo.*ALL='
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Password less sudo step 2
+  become: yes
+  become_method: su
+  lineinfile:
+    path: /etc/sudoers
+    insertafter: '# Allow members of group sudo to execute any command'
+    line: '%sudo ALL=(ALL:ALL) NOPASSWD: ALL'
+    validate: /usr/sbin/visudo -cf %s
+
+#
+# The DVD is not signed and there are some other issues with using a DVD as package source
+# The following change resolves these issues.
+#
+
+- name: Trust CDROM in /etc/apt/source.list
+  become: yes
+  replace:
+    path: /etc/apt/sources.list
+    regexp: '^deb cdrom'
+    replace: 'deb [ trusted=yes allow-insecure=yes allow-weak=yes allow-downgrade-to-insecure=yes ] cdrom'
+
+- name: Collect only facts
+  setup:
+
+
+# After these steps we have a minimal system wich can be installed with ansible from the ansible_user
+...

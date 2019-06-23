@@ -1,0 +1,21 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-06-23
+
+ntp_server:
+  hetzner:
+    - "ntp1.hetzner.de"
+    - "ntp2.hetzner.com"
+    - "ntp3.hetzner.net"
+  strato:
+    - "ntp1.rz-ip.net"
+    - "ntp2.rz-ip.net"
+  tonline:
+    - "ntp1.t-online.de"
+  fritzbox:
+    - "192.168.178.1"
+  speedport:
+    - "192.168.2.1"
+  azure:
+    - "time.windows.com"
+...

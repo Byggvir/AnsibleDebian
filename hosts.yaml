@@ -5,14 +5,12 @@ all:
     children:
         minisystem:
             hosts:
-                minisys.example.com:
-                arendthomas.northeurope.cloudapp.azure.com:
-            vars:
-                ansible_user: thomas
+                minisys:
+                azure:
+                dt:
         webserver:
             hosts:
-                minisys.example.com:
-                arendthomas.northeurope.cloudapp.azure.com:
-            vars:
-                ansible_user: thomas
+                minisys:
+                azure:
+                dt:
 ...

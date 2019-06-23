@@ -1,0 +1,7 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-06-23
+
+- name: "Install ntp-server"
+  include_tasks: "tsk_ntp.yaml"
+...

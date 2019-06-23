@@ -1,0 +1,7 @@
+---
+ansible_host: dt.arend.tksd
+ansible_user: thomas
+become_user: root
+installedFrom: 'azure.com'
+...
+

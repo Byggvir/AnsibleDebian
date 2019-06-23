@@ -2,23 +2,15 @@
 
 - name: Install minimal system requirements for ansible
   hosts: all
-  gather_facts: false
-  become: yes
+  gather_facts: yes
+  become: true
   tasks:
     - include_role:
         name: minimalsystem
 
-- name: Install common components
-  hosts: all
-  gather_facts: true
-  become: yes
-  tasks:
-    - include_role:
-        name: common
-
 - name: Install NTP
   hosts: all
-  gather_facts: true
+  gather_facts: false
   become: yes
   tasks:
     - include_role:
@@ -31,6 +23,15 @@
   tasks:
     - include_role:
         name: samba
+
+- name: Install webserver
+  hosts: webserver
+  gather_facts: false
+  become: yes
+  tasks:
+    - include_role:
+        name: webserver
+
 
 
 ...

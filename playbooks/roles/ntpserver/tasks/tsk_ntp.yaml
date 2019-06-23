@@ -3,10 +3,10 @@
 # Erstellt am:  2019-06-23
 
 - name: Delete servers and pool from ntp.conf
-  replace:
+  lineinfile:
     dest: /etc/ntp.conf
     regexp: '(^pool|^server) .*'
-    replace: '# \1'
+    state: absent
   when: provider is defined
 
 - name: Insert server into /etc/ntp.conf

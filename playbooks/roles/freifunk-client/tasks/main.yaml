@@ -1,0 +1,21 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-06-24
+
+- name: Install required packages
+  apt:
+    name:
+      - libasyncns0 
+      - libasyncns-dev
+      - libnl-genl-3-dev
+
+- name: Install Tunneldigger
+  git:
+    repo: https://github.com/wlanslovenija/tunneldigger.git
+    dest: /opt/
+    clone: yes
+    update: yes
+
+- name: Compile, link Tunneldigger
+  raw: "cd /opt/tunneldigger && cmake . && make"
+  

@@ -9,5 +9,5 @@
   become_method: su
   tasks:
     - include_role:
-        name: minimalsystem
+        name: ansible-compatible
 ...

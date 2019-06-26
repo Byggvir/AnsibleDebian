@@ -1,0 +1,28 @@
+---
+ansible_host: cpi2.arend.tksd
+ansible_user: pi
+
+gre:
+  bb-a:
+    tunnel:
+        remote: 192.168.2.40
+        local:  '{{ ansible_default_ipv4.address }}'
+        netmask: 255.255.255.254
+        mtu: 1400
+        ttl: 64
+    dev: tun-bb-a
+    address: 10.0.200.2
+    daddress: 10.0.200.1
+    network: 10.0.20.0/24
+  bb-b:
+    tunnel:
+        remote: 192.168.2.41
+        local:  '{{ ansible_default_ipv4.address }}'
+        netmask: 255.255.255.254
+        mtu: 1400
+        ttl: 64
+    dev: tun-bb-b
+    address: 10.0.200.6
+    daddress: 10.0.200.5
+    network: 10.0.20.0/24
+...

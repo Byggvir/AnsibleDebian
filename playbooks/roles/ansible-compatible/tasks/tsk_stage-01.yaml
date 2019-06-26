@@ -5,7 +5,7 @@
   become_method: su
   ignore_errors: true
   raw: '[ -n "$(findmnt /dev/sr0)" ] || mount -r /dev/sr0'
-  when: installedFrom == 'dvd'
+  when: installed is defined and installedFrom == 'dvd'
 
 - name: Make this server ansible compatible
   become: yes

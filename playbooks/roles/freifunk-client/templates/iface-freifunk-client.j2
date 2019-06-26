@@ -1,0 +1,55 @@
+auto br-client
+iface br-client inet static
+  mtu 1380
+  bridge-stp no
+  bridge-fd 0
+  bridge-hello 10
+  bridge_ports none
+  address 10.181.0.161
+  netmask 255.255.192.0
+
+iface br-client inet6 static
+  address fdb5:78b:64cc::161/64
+  post-up sysctl net.ipv6.conf.$IFACE.accept_ra=0
+  post-up sysctl net.ipv6.conf.$IFACE.accept_redirects=0
+  post-up ip -6 addr add 2a03:2260:100b::161/64 dev $IFACE
+
+allow-hotplug bat0
+iface bat0 inet manual
+  pre-up ip link set address $(cat /sys/class/net/eth0/address) dev $IFACE
+  #pre-up ip link set address 02:44:08:0f:87:35 dev $IFACE
+  post-up ip link set up dev $IFACE
+  post-up sysctl net.ipv6.conf.$IFACE.disable_ipv6=1
+
+  # prevent Gateway-Traffic
+  post-up echo 100 > /sys/class/net/$IFACE/mesh/hop_penalty
+  post-up echo 1 >  /sys/class/net/$IFACE/mesh/bridge_loop_avoidance
+  post-up batctl gw client 45
+  post-up batctl orig_interval 5000
+  post-up batctl multicast_mode 0
+  post-up brctl addif br-client $IFACE
+
+allow-hotplug mesh-vpn-l2tp-1
+iface mesh-vpn-l2tp-1 inet manual
+  post-up ip link set up dev $IFACE
+  post-up ip link set mtu 1406 $IFACE
+  post-up sysctl net.ipv6.conf.$IFACE.disable_ipv6=1
+
+  post-up batctl if add $IFACE
+  
+allow-hotplug mesh-vpn-l2tp-2
+iface mesh-vpn-l2tp-2 inet manual
+  post-up ip link set up dev $IFACE
+  post-up ip link set mtu 1406 $IFACE
+  post-up sysctl net.ipv6.conf.$IFACE.disable_ipv6=1
+
+  post-up batctl if add $IFACE
+
+allow-hotplug mesh-vpn-l2tp-3
+iface mesh-vpn-l2tp-3 inet manual
+  post-up ip link set up dev $IFACE
+  post-up ip link set mtu 1406 $IFACE
+  post-up sysctl net.ipv6.conf.$IFACE.disable_ipv6=1
+
+  post-up batctl if add $IFACE
+

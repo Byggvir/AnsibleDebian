@@ -3,14 +3,35 @@
 
 all:
     children:
-        minisystem:
+        pi:
+            children:
+                cluster:
+                    # Cluster of 4 Pi
+                    hosts:
+                        cpi[0:3]:
+                nocluster:
+                    hosts:
+                        pi1:    # Pi Server 1
+                        pie:    # Pi im Gemeindezentrum
+                        pisvr:  # Pi Server 2 with 2 TB
+        vserver:
+            hosts:
+                byggvir:     # Not a Pi but ...
+                azure:
+        pc:
+            hosts:
+                dt-thomas:   # My desktop
+                lt-thomas:   # My laptop
+        gateways:
+            hosts:
+                pi1:
+                pie:
+                cpi[0:3]:
+        samba:
+            hosts:
+                pi1:
+        test:
             hosts:
                 minisys:
-                azure:
-                dt:
-        webserver:
-            hosts:
-                minisys:
-                azure:
-                dt:
+
 ...

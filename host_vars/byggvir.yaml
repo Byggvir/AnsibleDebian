@@ -1,0 +1,4 @@
+---
+ansible_host: byggvir.de
+ansible_user: thomas
+...

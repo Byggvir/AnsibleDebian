@@ -1,0 +1,17 @@
+---
+# Update with apt / apt-get
+
+- name: Adding php key
+  become: yes
+  become_method: sudo
+  apt_key:
+    id: "{{ item }}"    
+    keyserver: hkp://keys.gnupg.net
+  loop:  
+    - A2F683C52980AECF
+    - C5E224500C1289C0
+    - B188E2B695BD4743
+    - 93C4A3FD7BB9C367
+    - EF8B479E2DC1389C
+    - 379CE192D401AB61
+    - C6ABDCF64DB9A0B2

@@ -1,0 +1,17 @@
+---
+
+# Playbook to update and upgrade Linux / Debian hosts
+
+- name: Update Linux
+  become: yes
+  become_method: sudo
+  hosts: all
+  gather_facts: False
+  tasks:
+    - include_tasks: roles/common/tasks/00-get-apt-keys.yaml
+      tags: update
+    - include_tasks: roles/common/tasks/00-prepare.yaml
+      tags: update
+    - include_tasks: roles/common/tasks/01-upgrade.yaml
+      tags: update
+...

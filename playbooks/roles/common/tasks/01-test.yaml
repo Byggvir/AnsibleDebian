@@ -1,0 +1,6 @@
+---
+# Test task
+- name: Empty
+  debug:
+    msg: "Test task started"
+...

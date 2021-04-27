@@ -1,0 +1,20 @@
+---
+# Update with apt / apt-get
+
+
+- name: Remove php stretch repo
+  apt_repository: 
+    repo: 'deb https://packages.sury.org/php/ stretch main' 
+    state: absent
+
+- name: Add php buster repo
+  apt_repository: 
+    repo: 'deb https://packages.sury.org/php/ buster main' 
+    state: present
+    
+- name: Update and upgrade apt packages
+  become: yes
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 600

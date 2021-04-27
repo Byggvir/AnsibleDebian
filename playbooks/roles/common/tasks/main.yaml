@@ -1,0 +1,19 @@
+---
+#
+# Main ansible role task for common installation 
+#
+# file: playbooks/roles/common/tasks/main.yaml
+#
+# Thomas Arend
+# Date 2019-04-13
+#
+#
+
+- include_tasks: 00-get-apt-keys.yaml
+- include_tasks: 00-prepare.yaml
+- include_tasks: 01-upgrade.yaml
+- include_tasks: 01-all.yaml
+- include_tasks: 02-linux-plus.yaml
+
+
+...

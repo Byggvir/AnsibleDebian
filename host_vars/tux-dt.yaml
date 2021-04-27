@@ -1,5 +1,5 @@
 ---
-ansible_host: tux-dt.arend.tksd
+ansible_host: 192.168.20.52
 ansible_user: thomas
 become_user: root
 become_method: sudo

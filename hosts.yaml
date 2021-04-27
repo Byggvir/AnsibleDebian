@@ -10,8 +10,8 @@ all:
                 azure:
         pc:
             hosts:
-                dt-thomas:   # My desktop
-                lt-thomas:   # My laptop
+                tux-dt:   # My desktop
+                tux-lt:   # My laptop
         gateways:
             hosts:
 

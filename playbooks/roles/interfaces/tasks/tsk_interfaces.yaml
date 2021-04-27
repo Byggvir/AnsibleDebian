@@ -1,0 +1,103 @@
+---
+# supernode/tasks/main.yaml
+
+# Configure LAN Interfaces in /etc/network/interfaces.conf
+
+- name: create /etc/network 
+  file:
+    path: /etc/network
+    state: directory
+    mode: 0755
+
+# Create directory for interfaces
+
+- name: create /etc/network/interfaces.d 
+  file:
+    path: /etc/network/interfaces.d
+    state: directory
+    mode: 0755
+# Create directory for interfaces
+
+- name: create /etc/systemd/network 
+  file:
+    path: /etc/systemd/network
+    state: directory
+    mode: 0755
+
+- name: delete /etc/network/interfaces
+  file:
+    path: /etc/network/interfaces
+    state: absent
+
+# Configure default Interfaces
+
+#- name: create ethernet config
+#  template:
+#    src: iface-lan.j2
+#    dest: /etc/network/interfaces
+#    owner: root
+#    group: root
+#    mode: 0644
+
+# Configure systemd/network
+
+- name: Supernode LAN interface
+  template:
+    src: eth0.network.j2
+    dest: /etc/systemd/network/00-ether.network
+    owner: root
+    group: root
+    mode: 0644
+
+# Configure default Interfaces
+
+- name: delete /etc/network/interfaces.d ffrl uplink
+  file:
+    path: "/etc/network/interfaces.d/{{ ffrl.iface }}"
+    state: absent
+
+#- name: IFACE FFRL uplink 
+#  template:
+#    src: iface-uplink.j2
+#    dest: "/etc/network/interfaces.d/{{ ffrl.iface }}"
+#    owner: root
+#    group: root
+#    mode: 0644
+
+- name: Disable services
+  service:
+    name: "{{ item }}"
+    enabled: no
+  ignore_errors: yes
+  loop:
+    - network
+    - NetworkManager
+
+- name: Enable services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  loop:
+    - systemd-networkd
+    - systemd-resolved
+
+- name: Disable services
+  service:
+    name: systemd-resolved
+    state: restarted
+    enabled: yes
+
+- name: remove resolv.conf
+  file:
+    path: /etc/resolv.conf
+    state: absent
+
+- name: create link to systemd resolv.conf
+  file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    state: link
+    
+...

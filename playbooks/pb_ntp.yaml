@@ -1,0 +1,9 @@
+---
+
+- name: Install NTP
+  hosts: all
+  become: yes
+  tasks:
+    - include_role:
+        name: ntpserver
+...

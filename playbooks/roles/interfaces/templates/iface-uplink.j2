@@ -1,0 +1,25 @@
+# Freifunk Voreifel 
+# Ansible dummy uplink configuration
+
+# < This file is maintained by ansible. Don't edit > 
+# < Configure own network devices in the directory interface.d/>
+
+# Thomas Arend
+# Stand: 2019-07-15
+
+auto {{ ffrl.iface }}
+
+iface {{ ffrl.iface }} inet static
+    address {{ ffrl.IPv4.addr }}
+    netmask 255.255.255.255
+    pre-up ip link add $IFACE type dummy
+    post-up ip rule add fwmark 0x4 table 42
+    post-up ip rule add from {{ ffrl.IPv4.addr }}/32 lookup 42
+    pre-down ip rule del fwmark 0x4 table 42
+    pre-down ip rule del from {{ ffrl.IPv4.addr }}/32 lookup 42
+    post-down ip link del $IFACE
+
+iface {{ ffrl.iface }} inet6 static
+    address {{ ffrl.IPv6.addr }}/64
+    post-up ip -6 rule add fwmark 0x4 table 42
+    post-up ip -6 rule add from {{ ffrl.IPv6.net }} lookup 42

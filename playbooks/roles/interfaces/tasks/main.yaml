@@ -1,0 +1,8 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-11
+
+- name: "Configure interfaces"
+  include_tasks: tsk_interfaces.yaml
+
+...

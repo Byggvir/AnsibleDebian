@@ -1,4 +1,6 @@
 ---
 ansible_host: arendthomas.northeurope.cloudapp.azure.com
 ansible_user: thomas
+timepool: de
+
 ...

@@ -7,18 +7,27 @@
     dest: /etc/ntp.conf
     regexp: '(^pool|^server) .*'
     state: absent
-  when: provider is defined
+  when: timeservers is defined or timepool is defined
+
+- name: Insert pool into /etc/ntp.conf
+  lineinfile:
+    path: /etc/ntp.conf
+    line: "pool {{ item }}"
+  loop: "{{ ntp_server.pools[timepool] | list }}"
+  register: ntppool
+  when: timepool is defined and ntp_server.pools[timepool] is defined
 
 - name: Insert server into /etc/ntp.conf
   lineinfile:
     path: /etc/ntp.conf
     line: "server {{ item }} iburst"
-  loop: "{{ ntp_server[provider] | list }}"
-  when: provider is defined
+  loop: "{{ ntp_server.server[timeservers] | list }}"
+  register: ntpsvr
+  when: timeservers is defined and ntp_server.server[timeservers] is defined
   
 - name: Restart ntp
   service:
     name: ntp.service
     state: restarted
-  when: provider is defined
+  when: ( ntppool is changed ) or ( ntpsvr is changed )
 ...

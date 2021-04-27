@@ -32,3 +32,29 @@
         - imagemagick
     update_cache: yes
 
+- apache2_module:
+    state: present
+    name: 
+        - access_compat
+        - alias
+        - auth_basic
+        - authn_core
+        - authn_file
+        - authz_core
+        - authz_host
+        - authz_user
+        - autoindex
+        - deflate
+        - dir
+        - env
+        - filter
+        - gnutls
+        - mime
+        - mpm_prefork
+        - negotiation
+        - php7
+        - reqtimeout
+        - setenvif
+        - socache_dbm
+        - status
+...

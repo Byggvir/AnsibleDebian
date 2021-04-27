@@ -1,4 +1,0 @@
----
-ansible_host: minisys.example.com
-ansible_user: thomas
-...

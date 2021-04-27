@@ -1,0 +1,5 @@
+---
+ansible_host: 85.214.174.199
+ansible_user: thomas
+timeservers: strato
+...

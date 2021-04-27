@@ -1,0 +1,9 @@
+---
+
+- name: Install Freifunk map 
+  gather_facts: true
+  hosts: byggvir
+  tasks:
+    - include_role:
+        name: hopglass
+...

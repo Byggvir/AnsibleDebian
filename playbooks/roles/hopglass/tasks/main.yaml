@@ -1,0 +1,63 @@
+---
+# Erstellt von: Thomas Arend
+# Erstellt am:  2019-07-20
+
+# Ab hier muss noch dein Code hinein
+
+- name: Update and upgrade apt packages
+  become: yes
+  apt:
+    upgrade: "yes"
+    update_cache: yes
+    cache_valid_time: 86400 # One day
+
+- name: Get nodesource
+  get_url:
+    url: "https://deb.nodesource.com/setup_12.x"
+    dest: "/tmp/nodesource.sh"
+    mode: '0755'
+
+- name: Get npm
+  get_url:
+    url: "https://npmjs.org/install.sh"
+    dest: "/tmp/npmjs.sh"
+    mode: '0755'
+
+- name: Install nodesource
+  become: yes
+  shell: "/tmp/nodesource.sh"
+
+- name: Install npmjs
+  become: yes
+  shell: "/tmp/npmjs.sh"
+
+- name: Install required packages for hopglass installation
+  become: yes
+  apt:
+    name:
+      - build-essential
+      - software-properties-common
+      - curl
+      - nodejs
+    update_cache: yes
+    state: present
+
+- name: Get hopglass from gitgub
+  git:
+    repo: https://github.com/hopglass/hopglass.git
+    dest: /tmp/hopglass
+
+- name: Compile hopglass
+  shell: "cd /tmp/hopglass && npm install && node_modules/.bin/grunt "
+  
+- name: Copy build into vhost directory
+  become: yes
+  copy:
+    remote_src: yes
+    src: /tmp/hopglass/build
+    dest: "/var/www/vhosts/{{ item }}"
+    recursive: yes
+  loop:
+    - map.freifunk-rheinbach.de
+    - snw-map.freifunk-rheinbach.de
+...

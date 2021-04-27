@@ -1,4 +1,0 @@
----
-ansible_host: pisvr.arend.tksd
-ansible_user: pi
-...
